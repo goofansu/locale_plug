@@ -17,8 +17,6 @@ defmodule LocalePlug do
   end
 
   def call(conn, backend: backend) do
-    Plug.Conn.fetch_query_params(conn)
-
     case fetch_locale(conn, backend) do
       nil ->
         conn

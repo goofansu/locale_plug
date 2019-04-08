@@ -2,7 +2,8 @@
 
 A plug to set locale for web applications.
 
-The plug fetches `locale` from `Plug.Conn.params` and `Plug.Conn.cookies`, setting the locale for specified backend. 
+`locale` is detected according to following order:
+> params > cookies > "accept-language" in request headers
 
 ## Installation
 

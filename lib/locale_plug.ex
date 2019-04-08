@@ -17,28 +17,29 @@ defmodule LocalePlug do
   end
 
   def call(conn, backend: backend) do
-    case fetch_locale(conn, backend) do
-      nil ->
-        conn
-
-      locale ->
+    case fetch_locale(conn) |> validate_locale(backend) do
+      {:ok, locale} ->
         Gettext.put_locale(backend, locale)
         put_resp_cookie(conn, "locale", locale, max_age: @max_age)
+
+      :error ->
+        conn
     end
   end
 
-  defp fetch_locale(conn, backend) do
-    (conn.params["locale"] || conn.cookies["locale"])
-    |> check_locale(backend)
-  end
+  defp fetch_locale(%{params: %{"locale" => locale}}), do: {:ok, locale}
+  defp fetch_locale(%{cookies: %{"locale" => locale}}), do: {:ok, locale}
+  defp fetch_locale(_), do: :error
 
-  defp check_locale(locale, backend) do
+  defp validate_locale({:ok, locale}, backend) do
     supported_locales = Gettext.known_locales(backend)
 
     if locale in supported_locales do
-      locale
+      {:ok, locale}
     else
-      nil
+      :error
     end
   end
+
+  defp validate_locale(:error, _), do: :error
 end

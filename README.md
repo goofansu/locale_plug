@@ -1,6 +1,6 @@
 # LocalePlug
 
-A plug to set locale for web applications.
+An Elixir plug to set locale for web applications.
 
 `locale` is detected according to following order:
 > params > cookies > "accept-language" in request headers

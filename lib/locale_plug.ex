@@ -1,10 +1,8 @@
 defmodule LocalePlug do
   @moduledoc """
-  Fetch locale from params or cookies and set it for the specified Gettext backend.
+  Fetch locale and set it for the specified Gettext backend.
 
-  ## Example
-
-      plug LocalePlug, backend: MyApp.Gettext
+  Detect locale in following order: params > cookies > accept-language header
   """
 
   import Plug.Conn
@@ -17,29 +15,75 @@ defmodule LocalePlug do
   end
 
   def call(conn, backend: backend) do
-    case fetch_locale(conn) |> validate_locale(backend) do
-      {:ok, locale} ->
-        Gettext.put_locale(backend, locale)
-        put_resp_cookie(conn, "locale", locale, max_age: @max_age)
-
-      :error ->
+    case fetch_locale(conn, backend) do
+      nil ->
         conn
+
+      locale ->
+        Gettext.put_locale(backend, locale)
+
+        conn
+        |> put_resp_header("content-language", locale_to_language(locale))
+        |> put_resp_cookie("locale", locale, max_age: @max_age)
     end
   end
 
-  defp fetch_locale(%{params: %{"locale" => locale}}), do: {:ok, locale}
-  defp fetch_locale(%{cookies: %{"locale" => locale}}), do: {:ok, locale}
-  defp fetch_locale(_), do: :error
+  defp fetch_locale(conn, backend) do
+    fetch_locale_from_params(conn, backend) ||
+      fetch_locale_from_cookies(conn, backend) ||
+      fetch_locale_from_headers(conn, backend)
+  end
 
-  defp validate_locale({:ok, locale}, backend) do
+  defp fetch_locale_from_params(conn, backend) do
+    conn.params["locale"] |> validate_locale(backend)
+  end
+
+  defp fetch_locale_from_cookies(conn, backend) do
+    conn.cookies["locale"] |> validate_locale(backend)
+  end
+
+  defp fetch_locale_from_headers(conn, backend) do
+    conn
+    |> accept_languages_from_header()
+    |> Enum.find(fn locale -> validate_locale(locale, backend) end)
+  end
+
+  # Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+  defp accept_languages_from_header(conn) do
+    case get_req_header(conn, "accept-language") do
+      [value | _] ->
+        values = String.split(value, ",")
+        Enum.map(values, &resolve_locale_from_accept_language(&1))
+
+      _ ->
+        []
+    end
+  end
+
+  defp resolve_locale_from_accept_language(language) do
+    language
+    |> String.split(";")
+    |> List.first()
+    |> language_to_locale()
+  end
+
+  defp language_to_locale(language) do
+    String.replace(language, "-", "_", global: false)
+  end
+
+  defp locale_to_language(locale) do
+    String.replace(locale, "_", "-", global: false)
+  end
+
+  defp validate_locale(nil, _), do: nil
+
+  defp validate_locale(locale, backend) do
     supported_locales = Gettext.known_locales(backend)
 
     if locale in supported_locales do
-      {:ok, locale}
+      locale
     else
-      :error
+      nil
     end
   end
-
-  defp validate_locale(:error, _), do: :error
 end

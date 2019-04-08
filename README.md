@@ -17,5 +17,5 @@ end
 ## Usage
 
 ```elixir
-plug LocalePlug, backend: BeaverWeb.Gettext
+plug LocalePlug, backend: MyApp.Gettext
 ```

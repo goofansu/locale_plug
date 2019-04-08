@@ -16,10 +16,13 @@ defmodule LocalePlug do
     [backend: backend]
   end
 
-  def call(conn, [backend: backend]) do
+  def call(conn, backend: backend) do
+    Plug.Conn.fetch_query_params(conn)
+
     case fetch_locale(conn, backend) do
       nil ->
         conn
+
       locale ->
         Gettext.put_locale(backend, locale)
         put_resp_cookie(conn, "locale", locale, max_age: @max_age)
@@ -33,6 +36,7 @@ defmodule LocalePlug do
 
   defp check_locale(locale, backend) do
     supported_locales = Gettext.known_locales(backend)
+
     if locale in supported_locales do
       locale
     else

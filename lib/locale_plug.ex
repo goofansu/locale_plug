@@ -44,16 +44,16 @@ defmodule LocalePlug do
 
   defp fetch_locale_from_headers(conn, backend) do
     conn
-    |> accept_languages_from_header()
+    |> locales_from_accept_language()
     |> Enum.find(fn locale -> validate_locale(locale, backend) end)
   end
 
   # Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
-  defp accept_languages_from_header(conn) do
+  defp locales_from_accept_language(conn) do
     case get_req_header(conn, "accept-language") do
       [value | _] ->
         values = String.split(value, ",")
-        Enum.map(values, &resolve_locale_from_accept_language(&1))
+        Enum.map(values, &resolve_locale_from_accept_language/1)
 
       _ ->
         []

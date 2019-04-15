@@ -12,7 +12,8 @@ defmodule LocalePlug.MixProject do
       # Publish package
       name: "LocalePlug",
       description: description(),
-      package: package()
+      package: package(),
+      docs: docs()
     ]
   end
 
@@ -40,6 +41,13 @@ defmodule LocalePlug.MixProject do
       licenses: ["MIT"],
       maintainers: ["goofansu"],
       links: %{"Github" => "https://github.com/goofansu/locale_plug"}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md"]
     ]
   end
 end

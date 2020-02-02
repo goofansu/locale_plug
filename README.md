@@ -3,6 +3,7 @@
 An Elixir plug to set locale for web applications.
 
 [![CircleCI](https://circleci.com/gh/beamlike/locale_plug.svg?style=svg)](https://circleci.com/gh/beamlike/locale_plug)
+![CI](https://github.com/beamlike/locale_plug/workflows/CI/badge.svg)
 
 `locale` is detected according to following order:
 

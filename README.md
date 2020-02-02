@@ -2,9 +2,10 @@
 
 An Elixir plug to set locale for web applications.
 
-[![CircleCI](https://circleci.com/gh/goofansu/locale_plug.svg?style=svg)](https://circleci.com/gh/goofansu/locale_plug)
+[![CircleCI](https://circleci.com/gh/beamlike/locale_plug.svg?style=svg)](https://circleci.com/gh/beamlike/locale_plug)
 
 `locale` is detected according to following order:
+
 > params > cookies > "accept-language" in request headers
 
 ## Installation

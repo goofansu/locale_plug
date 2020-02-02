@@ -15,7 +15,8 @@ jobs:
         otp: [20.x, 21.x, 22.x]
         exclude:
           - elixir: 1.10.x
-          - otp: 20.x
+            otp: 20.x
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup elixir

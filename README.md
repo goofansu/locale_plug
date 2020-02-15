@@ -2,7 +2,7 @@
 
 An Elixir plug to set locale for web applications.
 
-[![CI](https://github.com/beamlike/locale_plug/workflows/CI/badge.svg)](https://github.com/beamlike/locale_plug/actions?query=workflow%3ACI)
+[![CI](https://github.com/beambit/locale_plug/workflows/CI/badge.svg)](https://github.com/beambit/locale_plug/actions?query=workflow%3ACI)
 
 `locale` is detected according to following order:
 

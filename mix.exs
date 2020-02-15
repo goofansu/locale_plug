@@ -40,7 +40,7 @@ defmodule LocalePlug.MixProject do
       name: :locale_plug,
       licenses: ["MIT"],
       maintainers: ["goofansu"],
-      links: %{"Github" => "https://github.com/beamlike/locale_plug"}
+      links: %{"Github" => "https://github.com/beambit/locale_plug"}
     ]
   end
 

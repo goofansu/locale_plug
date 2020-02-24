@@ -1,6 +1,6 @@
 # LocalePlug
 
-An Elixir plug to set locale for web applications.
+A plug to set locale for Elixir web frameworks.
 
 [![CI](https://github.com/goofansu/locale_plug/workflows/CI/badge.svg)](https://github.com/goofansu/locale_plug/actions?query=workflow%3ACI)
 

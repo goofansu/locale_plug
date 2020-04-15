@@ -2,7 +2,7 @@
 
 A plug to set locale for Elixir web frameworks.
 
-[![CI](https://github.com/goofansu/locale_plug/workflows/CI/badge.svg)](https://github.com/goofansu/locale_plug/actions?query=workflow%3ACI)
+[![CI](https://github.com/bright-u/locale_plug/workflows/CI/badge.svg)](https://github.com/bright-u/locale_plug/actions?query=workflow%3ACI)
 
 `locale` is detected according to following order:
 

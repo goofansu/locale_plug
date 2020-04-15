@@ -32,7 +32,7 @@ defmodule LocalePlug.MixProject do
   end
 
   defp description do
-    "A plug to set locale for Elixir web applications."
+    "Elixir plug to detect and set locale."
   end
 
   defp package do

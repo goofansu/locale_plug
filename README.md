@@ -1,6 +1,6 @@
 # LocalePlug
 
-A plug to set locale for Elixir web applications.
+Elixir plug to detect and set locale.
 
 [![CI](https://github.com/bright-u/locale_plug/workflows/CI/badge.svg)](https://github.com/bright-u/locale_plug/actions?query=workflow%3ACI)
 

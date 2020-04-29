@@ -40,7 +40,7 @@ defmodule LocalePlug.MixProject do
       name: :locale_plug,
       licenses: ["MIT"],
       maintainers: ["Yejun Su"],
-      links: %{"Github" => "https://github.com/bright-u/locale_plug"}
+      links: %{"Github" => "https://github.com/goofansu/locale_plug"}
     ]
   end
 

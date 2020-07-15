@@ -22,7 +22,7 @@ jobs:
         run: mix format --check-formatted
 
   test:
-    name: OTP ${{matrix.erlang}} / Elixir ${{matrix.elixir}}
+    name: OTP ${{matrix.pair.erlang}} / Elixir ${{matrix.pair.elixir}}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

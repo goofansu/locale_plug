@@ -75,15 +75,35 @@ defmodule LocalePlug do
     String.replace(locale, "_", "-", global: false)
   end
 
+  # locale is language[_country][.charset]
+  # return a list that start from fully qualified name,
+  # than strip off charset, then strip off country
+  # ie: "en_US.UTF-8" -> ["en_US.UTF-8", "en_US", "en"]
+  defp fallback_locales(locale) do
+    list = [locale]
+
+    list =
+      case Regex.run(~r/(.*)\./, List.first(list)) do
+        [_full, part] -> [part | list]
+        _ -> list
+      end
+
+    list =
+      case Regex.run(~r/(.*)_/, List.first(list)) do
+        [_full, part] -> [part | list]
+        _ -> list
+      end
+
+    Enum.reverse(list)
+  end
+
   defp validate_locale(nil, _), do: nil
 
   defp validate_locale(locale, backend) do
     supported_locales = Gettext.known_locales(backend)
 
-    if locale in supported_locales do
-      locale
-    else
-      nil
-    end
+    Enum.find(fallback_locales(locale), fn locale ->
+      locale in supported_locales
+    end)
   end
 end

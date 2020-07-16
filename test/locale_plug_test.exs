@@ -20,6 +20,18 @@ defmodule LocalePlugTest do
     assert get_resp_header(conn, "content-language") == ["fr"]
   end
 
+  test "set supported locale from params with partial match" do
+    conn =
+      conn(:get, "/hello?locale=fr_FR")
+      |> Plug.Conn.fetch_cookies()
+      |> Plug.Conn.fetch_query_params()
+      |> LocalePlug.call(@opts)
+
+    assert Gettext.get_locale(MyApp.Gettext) == "fr"
+    assert conn.resp_cookies["locale"][:value] == "fr"
+    assert get_resp_header(conn, "content-language") == ["fr"]
+  end
+
   test "set unsupported locale from params" do
     conn =
       conn(:get, "/hello?locale=zh_CN")

@@ -80,10 +80,18 @@ defmodule LocalePlug do
   defp validate_locale(locale, backend) do
     supported_locales = Gettext.known_locales(backend)
 
-    if locale in supported_locales do
-      locale
-    else
-      nil
+    case String.split(locale, "_") do
+      [language, _] ->
+        Enum.find([locale, language], fn locale ->
+          locale in supported_locales
+        end)
+
+      [^locale] ->
+        if locale in supported_locales do
+          locale
+        else
+          nil
+        end
     end
   end
 end

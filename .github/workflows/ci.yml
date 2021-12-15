@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: erlef/setup-elixir@v1
         with:
-          otp-version: 23.1
-          elixir-version: 1.11.1
+          otp-version: 24.1
+          elixir-version: 1.13
       - run: mix deps.get
       - run: mix format --check-formatted
 
@@ -25,17 +25,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - erlang: 23.1
-            elixir: 1.11.1
-          - erlang: "23.0"
+          - erlang: 24.1
+            elixir: 1.13
+          - erlang: 24.0.1
+            elixir: 1.12.1
+          - erlang: 23.3
+            elixir: 1.11.4
+          - erlang: 23.3
             elixir: 1.10.4
-          - erlang: 22.3
-            elixir: 1.9.4
-          - erlang: 21.3
-            elixir: 1.8.2
-          - erlang: 20.3
-            elixir: 1.7.4
 
+    env:
+      MIX_ENV: test
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-elixir@v1

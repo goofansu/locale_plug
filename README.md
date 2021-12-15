@@ -13,7 +13,7 @@ Elixir plug to detect and set locale.
 ```elixir
 def deps do
   [
-    {:locale_plug, "~> 0.1.0"}
+    {:locale_plug, "~> 0.2.0"}
   ]
 end
 ```

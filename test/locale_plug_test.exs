@@ -3,7 +3,7 @@ defmodule LocalePlugTest do
   use Plug.Test
 
   defmodule MyApp.Gettext do
-    use Gettext, otp_app: :my_app
+    use Gettext, otp_app: :my_app, priv: "test/fixtures/my_app"
   end
 
   @opts LocalePlug.init(backend: MyApp.Gettext)
